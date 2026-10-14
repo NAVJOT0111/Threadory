@@ -1,0 +1,517 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Fonts: self-hosted variable WOFF2 from Fontsource, Latin subset only.
+   Schibsted also keeps Latin Extended because the rupee sign (U+20B9) lives there.
+   Bodoni Moda includes the optical-size axis, so it stays sturdy at 20px
+   and turns delicate at 100px.
+   ------------------------------------------------------------------ */
+@font-face {
+  font-family: 'Bodoni Moda Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url('../../node_modules/@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bodoni Moda Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url('../../node_modules/@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-italic.woff2')
+    format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Schibsted Grotesk Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url('../../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Schibsted Grotesk Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url('../../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens. Values come from the Threaddory Brand & Web Design
+   Brief. Do not change here without changing the brief.
+   ------------------------------------------------------------------ */
+@theme {
+  /* clear Tailwind defaults so only brand utilities exist */
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+
+  /* colour */
+  --color-petal: #f7e9e5;
+  --color-ink: #302126;
+  --color-wine: #6f1937;
+  --color-butter: #ebcb75;
+  --color-tomato: #d74338;
+  --color-tomato-deep: #b8322a;
+  --color-ink-muted: #67595c;
+  --color-milk: #fffaf7;
+  --color-plaster: #efdfd9;
+  --color-hairline: #dcc9c4;
+  --color-scrim: rgb(48 33 38 / 0.56); /* the only token allowed to carry alpha */
+
+  /* breakpoints: mobile is the default */
+  --breakpoint-tab: 37.5rem;
+  --breakpoint-desk: 64rem;
+  --breakpoint-wide: 90rem;
+
+  /* fonts */
+  --font-display: 'Bodoni Moda Variable', 'Bodoni 72', Didot, Georgia, serif;
+  --font-sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
+
+  /* type scale: fluid between 375px and 1440px viewport width */
+  --text-display-xl: clamp(3.25rem, 1.93rem + 5.63vw, 7rem);
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-xl--font-weight: 400;
+  --text-display-l: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
+  --text-display-l--line-height: 1;
+  --text-display-l--letter-spacing: -0.015em;
+  --text-display-l--font-weight: 500;
+  --text-h2: clamp(2rem, 1.65rem + 1.5vw, 3rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 500;
+  --text-h3: clamp(1.5rem, 1.32rem + 0.75vw, 2rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--font-weight: 500;
+  --text-product: clamp(1.0625rem, 1rem + 0.28vw, 1.25rem);
+  --text-product--line-height: 1.25;
+  --text-product--font-weight: 500;
+  --text-quote: clamp(1.375rem, 1.24rem + 0.56vw, 1.75rem);
+  --text-quote--line-height: 1.3;
+  --text-body-l: clamp(1.0625rem, 1.04rem + 0.1vw, 1.125rem);
+  --text-body-l--line-height: 1.6;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-label: 0.75rem; /* uppercase applied by the Label component */
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.12em;
+  --text-label--font-weight: 600;
+  --text-control: 0.875rem; /* nav, buttons, text links */
+  --text-control--line-height: 1;
+  --text-control--letter-spacing: 0.08em;
+  --text-control--font-weight: 600;
+  --text-price: clamp(0.9375rem, 0.92rem + 0.09vw, 1rem);
+  --text-price--line-height: 1.2;
+  --text-price--font-weight: 500;
+  /* index rows on the occasion list and menu links */
+  --text-index: clamp(1.75rem, 1.32rem + 1.85vw, 2.5rem);
+  --text-index--line-height: 1.1;
+  --text-index--font-weight: 500;
+  /* running band */
+  --text-band: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  --text-band--line-height: 1;
+  --text-band--font-weight: 400;
+  /* wordmark: 26px mobile to 32px desktop */
+  --text-wordmark: clamp(1.625rem, 1.493rem + 0.563vw, 2rem);
+  --text-wordmark--line-height: 1.1;
+  --text-wordmark--letter-spacing: -0.01em;
+  --text-wordmark--font-weight: 500;
+  /* announcement bar */
+  --text-announce: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);
+  --text-announce--line-height: 1;
+  --text-announce--font-weight: 500;
+
+  /* motion */
+  --duration-fast: 150ms;
+  --duration-image: 200ms;
+  --duration-drawer: 250ms;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* ------------------------------------------------------------------
+   Non-theme variables
+   ------------------------------------------------------------------ */
+:root {
+  --container-max: 85rem; /* 1360px */
+  --gutter: 1.25rem;
+  --section-y: 4rem;
+  --header-h: 3.75rem;
+  --announce-h: 2.25rem;
+  --border-structure: 1px;
+  --border-control: 1.5px;
+  --stitch-weight: 2px;
+  --stitch-dash: 8px;
+  --stitch-gap: 6px;
+  --stitch-color: currentColor;
+  --z-header: 40;
+  --z-menu: 45;
+  --z-overlay: 50;
+  --z-drawer: 60;
+  --z-toast: 70;
+}
+
+@media (min-width: 37.5rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 3rem;
+    --section-y: 6rem;
+    --header-h: 4.5rem;
+  }
+}
+
+:root[data-scrolled='true'] {
+  --header-h: 4rem;
+}
+
+@media (max-width: 63.999rem) {
+  :root[data-scrolled='true'] {
+    --header-h: 3.75rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Base layer
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  body {
+    @apply bg-petal font-sans text-body text-ink;
+    -webkit-font-smoothing: antialiased;
+    font-optical-sizing: auto;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    font-optical-sizing: auto;
+  }
+
+  img,
+  svg,
+  picture {
+    display: block;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-wine);
+    color: var(--color-petal);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Focus: 3px Ink outline, 3px offset; Butter on dark surfaces. */
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  [data-surface='wine'] :focus-visible,
+  [data-surface='ink'] :focus-visible,
+  [data-surface='tomato'] :focus-visible,
+  [data-surface='wine']:focus-visible,
+  [data-surface='ink']:focus-visible,
+  [data-surface='tomato']:focus-visible {
+    outline-color: var(--color-butter);
+  }
+
+  h1[tabindex='-1']:focus {
+    outline: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Custom utilities
+   ------------------------------------------------------------------ */
+@utility stitch-rule {
+  height: var(--stitch-weight);
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--stitch-color) 0 var(--stitch-dash),
+    transparent var(--stitch-dash) calc(var(--stitch-dash) + var(--stitch-gap))
+  );
+}
+
+@utility stitch-rule-v {
+  width: var(--stitch-weight);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--stitch-color) 0 var(--stitch-dash),
+    transparent var(--stitch-dash) calc(var(--stitch-dash) + var(--stitch-gap))
+  );
+}
+
+@utility arch {
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+}
+
+/* The two permitted circles: radio buttons and the hero stamp. */
+@utility round {
+  border-radius: 999px;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Borders: 1.5px for controls, 1px for structure */
+@utility border-control {
+  border-style: solid;
+  border-width: var(--border-control);
+}
+
+@utility border-structure {
+  border-style: solid;
+  border-width: var(--border-structure);
+}
+
+@utility border-t-structure {
+  border-top-style: solid;
+  border-top-width: var(--border-structure);
+}
+
+@utility border-b-structure {
+  border-bottom-style: solid;
+  border-bottom-width: var(--border-structure);
+}
+
+@utility border-l-structure {
+  border-left-style: solid;
+  border-left-width: var(--border-structure);
+}
+
+@utility border-b-control {
+  border-bottom-style: solid;
+  border-bottom-width: var(--border-control);
+}
+
+/* Text links: 1.5px underline, 6px offset */
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--border-control);
+  text-underline-offset: 6px;
+}
+
+/* Hero: minimum height 720px, at most 90% of the viewport */
+@utility hero-min {
+  min-height: min(45rem, 90dvh);
+}
+
+/* Pull an element to the viewport's left edge from inside container-page */
+@utility bleed-left {
+  margin-left: calc(-1 * (max(0px, (100vw - var(--container-max)) / 2) + var(--gutter)));
+}
+
+/* Snap scrollers: the next item peeks, no visible scrollbar */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Panels under the header never exceed the remaining viewport */
+@utility max-h-panel {
+  max-height: calc(100dvh - var(--header-h));
+}
+
+/* Header offset used by sticky elements */
+@utility top-header {
+  top: var(--header-h);
+}
+
+@utility h-header {
+  height: var(--header-h);
+}
+
+@utility h-announce {
+  height: var(--announce-h);
+}
+
+/* Stacking */
+@utility z-header {
+  z-index: var(--z-header);
+}
+@utility z-menu {
+  z-index: var(--z-menu);
+}
+@utility z-overlay {
+  z-index: var(--z-overlay);
+}
+@utility z-drawer {
+  z-index: var(--z-drawer);
+}
+@utility z-toast {
+  z-index: var(--z-toast);
+}
+
+/* Section padding from the token */
+@utility py-section {
+  padding-block: var(--section-y);
+}
+
+/* Product name underline on card hover: 1.5px, 4px offset */
+@utility name-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--border-control);
+  text-underline-offset: 4px;
+}
+
+/* The whole card is one link, so focus is drawn around the card */
+.product-card:has(a:focus-visible) {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.product-card a:focus-visible {
+  outline: none;
+}
+
+/* Fine Tomato stitch under the wordmark */
+@utility stitch-fine {
+  --stitch-weight: 1.5px;
+}
+
+@utility stitch-tomato {
+  --stitch-color: var(--color-tomato);
+}
+
+/* Oversized decorative footer wordmark, cropped by the bottom edge */
+@utility closing-wordmark {
+  font-size: min(16.5vw, 15rem); /* sized so the full word fits the container */
+  line-height: 0.8;
+  margin-bottom: -0.14em;
+}
+
+/* Mobile menu slides in over 250ms */
+@keyframes threaddory-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes threaddory-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility slide-in {
+  animation: threaddory-slide-in 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@utility fade-in {
+  animation: threaddory-fade-in 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Surface to stitch colour mapping */
+[data-surface='petal'],
+[data-surface='butter'] {
+  --stitch-color: var(--color-ink);
+}
+[data-surface='wine'],
+[data-surface='ink'],
+[data-surface='tomato'] {
+  --stitch-color: var(--color-petal);
+}
+
+/* Running band */
+@keyframes threaddory-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.running-band-track {
+  animation: threaddory-marquee 40s linear infinite;
+  width: max-content;
+}
+
+.running-band:hover .running-band-track,
+.running-band:focus-within .running-band-track {
+  animation-play-state: paused;
+}
+
+/* Hover effects only on devices that can hover */
+@media (hover: none) {
+  .hover-only {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
